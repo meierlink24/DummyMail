@@ -7,11 +7,11 @@
 
 ## – UI, Manifest & Email Generator Logic
 
-- [ ] Create base React layout in `frontend/dummy-usr-page/react`
-- [ ] Add TTL input (dropdown or number input)
-- [ ] Add “Generate Email” button
-- [ ] Display generated dummy email in UI
-- [ ] Create dummy email generator (e.g., random string + `@dummyusr.mail`)
+- [x] Create base React layout in `frontend/dummy-usr-page/react`
+- [x] Add TTL input (dropdown or number input)
+- [x] Add “Generate Email” button
+- [x] Display generated dummy email in UI
+- [x] Create dummy email generator (e.g., random string + `@dummyusr.mail`)
 - [ ] Store generated email + TTL in React state
 - [ ] Optional: Display countdown (TTL) in UI
 - [ ] Create `manifest.json` (Manifest V3)
@@ -22,14 +22,14 @@
 
 ## – Backend API & Frontend Integration
 
-- [ ] Set up simple backend 
-- [ ] Create API endpoint: `POST /generate` to return email + TTL
-- [ ] Create API endpoint: `GET /status/:id` to check expiry
-- [ ] Store generated emails with timestamps in-memory
+- [x] Set up simple backend 
+- [x] Create API endpoint: `POST /generate` to return email + TTL
+- [x] Create API endpoint: `GET /status/:id` to check expiry
+- [x] Store generated emails with timestamps in-memory
 - [ ] Add expiry logic: auto-remove expired emails 
-- [ ] Connect frontend to backend via `fetch` or Axios
+- [x] Connect frontend to backend via `fetch` or Axios
 - [ ] Display real email and status in frontend using API
-- [ ] Handle expired emails correctly in the UI
+- [x]  Handle expired emails correctly in the UI
 
 ---
 
@@ -38,9 +38,9 @@
 - [ ] Add "Copy to Clipboard" button
 - [ ] Add toast or alert: "Email copied!"
 - [ ] Show message if email has expired
-- [ ] Apply clean UI styling (black/white minimal)
-- [ ] Add favicon/logo/icon for the extension (optional)
-- [ ] Write basic tests:
+- [x] Apply clean UI styling (black/white minimal)
+- [ ] Add favicon/logo/icon for the extension 
+- [ ] basic tests:
   - [ ] Email format is correct
   - [ ] TTL countdown works
   - [ ] Backend returns expected results
