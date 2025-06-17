@@ -1,57 +1,55 @@
-import { useState } from "react";
+import { useState } from 'react';
+import EmailInbox from './EmailInbox';
 
 function GenerateEmailAddress({ onEmailGenerated }) {
-  const [duration, setDuration] = useState(1);
-  const [useDays, setUseDays] = useState(false);
-  const [useHours, setUseHours] = useState(false);
+  const [duration, setDuration] = useState(60);
+  const [emailData, setEmailData] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    let ttlMinutes = 0;
-    if (useDays) ttlMinutes += duration * 1440;
-    if (useHours) ttlMinutes += duration * 60;
-
-    // Replace with real POST request
-    await fetch("http://localhost:3000/generate", {
-      method: "POST",
-    });
-
-    onEmailGenerated(); // callback to App.jsx
+    
+    try {
+      const response = await fetch('http://localhost:3000/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ttlMinutes: duration })
+      });
+      
+      const data = await response.json();
+      setEmailData(data);
+      onEmailGenerated(data);
+    } catch (error) {
+      console.error('Error generating email:', error);
+      alert('Failed to generate email');
+    }
   };
 
   return (
-    <div className="generate-form">
+    <div className="email-generator">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="duration">Duration:</label>
-        <input
-          type="number"
-          id="duration"
-          value={duration}
-          onChange={(e) => setDuration(Number(e.target.value))}
-          min="1"
-        />
-
-        <div>
+        <label>
+          Email Lifetime (minutes):
           <input
-            type="checkbox"
-            id="days"
-            checked={useDays}
-            onChange={() => setUseDays(!useDays)}
+            type="number"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            min="1"
+            required
           />
-          <label htmlFor="days">Days</label>
-
-          <input
-            type="checkbox"
-            id="hours"
-            checked={useHours}
-            onChange={() => setUseHours(!useHours)}
-          />
-          <label htmlFor="hours">Hours</label>
-        </div>
-
-        <input type="submit" value="Generate Email Address" />
+        </label>
+        
+        <button type="submit">Create Temporary Email</button>
       </form>
+
+      {emailData && (
+        <div className="email-result">
+          <h3>Your Temporary Email:</h3>
+          <p className="email-address">{emailData.email}</p>
+          <p>Expires: {new Date(emailData.expiresAt).toLocaleString()}</p>
+          
+          <EmailInbox email={emailData.email} />
+        </div>
+      )}
     </div>
   );
 }
